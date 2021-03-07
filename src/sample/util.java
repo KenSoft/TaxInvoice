@@ -445,7 +445,66 @@ public class util {
             JSONObject log = new JSONObject();
             log.put("withData",2);
             log.put("target", newProduct.toString());
-            log.put("action","Customer added successfully");
+            log.put("action","Product added successfully");
+            log.put("userId",userInfo.getInt("userId"));
+            writeLog(log);
+            con.close();
+        }catch(Exception e){ System.out.println(e);}
+    }
+    public static JSONObject getProduct(int productId,JSONObject userInfo){
+        JSONObject product = new JSONObject();
+
+        try{
+
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con=DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/tax_receipt_system",SQLUser, SQLPassword);
+
+            Statement stmt=con.createStatement();
+            ResultSet rs=stmt.executeQuery("select * from products where productId="+productId);
+            JSONObject log = new JSONObject();
+
+            while(rs.next()) {
+
+
+                product.put("productId",rs.getInt(1));
+                product.put("productName",rs.getString(2));
+                product.put("unit",rs.getString(3));
+                product.put("description",rs.getString(4));
+                product.put("price",rs.getDouble(5));
+
+
+            }
+            log.put("withData",2);
+            log.put("target",product.toString());
+            log.put("action","Product information read successfully");
+            log.put("userId",userInfo.getInt("userId"));
+            writeLog(log);
+            //System.out.println(count);
+            con.close();
+        }catch(Exception e){ System.out.println(e);}
+        return product;
+    }
+    public static void modifyProduct(JSONObject newInfo, JSONObject userInfo){
+        JSONObject oldInfo = getProduct(newInfo.getInt("productId"),userInfo);
+        try{
+
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con=DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/tax_receipt_system",SQLUser, SQLPassword);
+            //here sonoo is database name, root is username and password
+            Statement stmt=con.createStatement();
+            stmt.execute("UPDATE products SET productName='"+newInfo.getString("productName")
+                    +"',description='"+newInfo.getString("description")
+                    +"',unit='"+newInfo.getString("unit")
+                    +"',price='"+newInfo.getDouble("price")
+                    +"' WHERE productId="+newInfo.getInt("productId"));
+
+            JSONObject log = new JSONObject();
+            log.put("withData",3);
+            log.put("target",oldInfo.toString());
+            log.put("newValue", newInfo.toString());
+            log.put("action","Product information edited successfully");
             log.put("userId",userInfo.getInt("userId"));
             writeLog(log);
             con.close();

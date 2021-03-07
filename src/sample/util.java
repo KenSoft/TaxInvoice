@@ -529,5 +529,64 @@ public class util {
             con.close();
         }catch(Exception e){ System.out.println(e);}
     }
+    public static int newInvoice(JSONObject userInfo){
+        int invoiceId = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con=DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/tax_receipt_system",SQLUser, SQLPassword);
+            //here sonoo is database name, root is username and password
+            Statement stmt=con.createStatement();
+            stmt.execute("INSERT INTO invoices (customerId,JSON) VALUES ('','{}')");
+            ResultSet rs = stmt.executeQuery("SELECT MAX(invoiceId) FROM `invoices`");
+            while(rs.next()){
+                invoiceId = rs.getInt(1);
+            }
+            JSONObject log = new JSONObject();
+            log.put("withData",2);
+            log.put("target", String.valueOf(invoiceId));
+            log.put("action","New invoice created successfully");
+            log.put("userId",userInfo.getInt("userId"));
+            writeLog(log);
+            con.close();
+            return invoiceId;
+        }catch(Exception e){ System.out.println(e);}
+        return 0;
+    }
+    public static JSONObject getCompanyInfo(JSONObject userInfo){
+        JSONObject product = new JSONObject();
+
+        try{
+
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con=DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/tax_receipt_system",SQLUser, SQLPassword);
+
+            Statement stmt=con.createStatement();
+            ResultSet rs=stmt.executeQuery("select * from companyInfo where id=1");
+            JSONObject log = new JSONObject();
+
+            while(rs.next()) {
+
+
+                product.put("companyName",rs.getString(2));
+                product.put("taxId",rs.getString(3));
+                product.put("address",rs.getString(4));
+                product.put("officePhone",rs.getString(5));
+                product.put("email",rs.getString(6));
+                product.put("website",rs.getString(7));
+
+
+            }
+            log.put("withData",2);
+            log.put("target",product.toString());
+            log.put("action","Company information read successfully");
+            log.put("userId",userInfo.getInt("userId"));
+            writeLog(log);
+            //System.out.println(count);
+            con.close();
+        }catch(Exception e){ System.out.println(e);}
+        return product;
+    }
 }
 

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" prefHeight="800.0" prefWidth="1000.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.modifyInvoiceController">
+    <rowConstraints>
+        <RowConstraints maxHeight="400" minHeight="40.0" prefHeight="80.0" />
+    </rowConstraints>
+    <children>
+        <Label alignment="CENTER" contentDisplay="CENTER" text="Edit Invoice" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="0">
+            <font>
+                <Font size="32.0" />
+            </font>
+        </Label>
+        <DatePicker GridPane.rowIndex="2" promptText="Select Date"/>
+        <Label fx:id="invoiceIdLabel" prefHeight="45.0" prefWidth="939.0" GridPane.rowIndex="1" alignment="CENTER">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
+      <Label fx:id="companyInfoLabel" minHeight="80.0" prefWidth="939.0" GridPane.rowIndex="3">
+          <font>
+              <Font size="14.0" />
+          </font>
+      </Label>
+        <ComboBox fx:id="customerCombo" prefHeight="26.0" prefWidth="1007.0" promptText="Select Customer" GridPane.rowIndex="4" >
+        </ComboBox>
+        <Label fx:id="customerInfoLabel" minHeight="80.0" prefWidth="939.0" GridPane.rowIndex="5">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <TableView fx:id="tableView" minHeight="300.0" prefWidth="800.0" GridPane.rowIndex="6">
+            <columns>
+                <TableColumn prefWidth="50" text="Number">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="number" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="80" text="Product ID">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="productId" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="320" text="Product Name">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="productName" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="120" text="Quantity">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="quantity" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="120" text="Price Per Unit">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="price" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="120" text="Total Price">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="totalPrice" />
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
+        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="45.0" prefWidth="939.0" text="" textAlignment="RIGHT" GridPane.rowIndex="7">
+            <font>
+                <Font size="32.0" />
+            </font>
+        </Label>
+        <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="8">
+         <buttons>
+             <ComboBox prefHeight="26.0" prefWidth="413.0" promptText="Select Product" ButtonBar.buttonData="LEFT" />
+            <TextField promptText="Input Quantity" ButtonBar.buttonData="LEFT" />
+            <Button mnemonicParsing="false" text="Add Product to Invoice" ButtonBar.buttonData="LEFT" />
+            <Button mnemonicParsing="false" text="Remove Product from Invoice" />
+
+         </buttons>
+        </ButtonBar>
+        <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="9">
+            <buttons>
+                <Button fx:id="previousButton" mnemonicParsing="false" onAction="#previousPress" prefHeight="25.0" prefWidth="690.0" text="Close" ButtonBar.buttonData="LEFT" />
+                <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="400" text="Print Invoice" ButtonBar.buttonData="RIGHT" />
+            </buttons>
+        </ButtonBar>
+
+
+    </children>
+    <padding>
+        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+    </padding>
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>

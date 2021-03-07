@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -46,7 +47,19 @@ public class mainMenuController {
         }
     }
     public void createInvoiceAction (ActionEvent actionEvent){
-
+        try {
+            int invoiceId = util.newInvoice(this.userInfo);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("modifyInvoice.fxml"));
+            Parent modifyInvoiceParent = (Parent) fxmlLoader.load();
+            Scene modifyInvoiceScene = new Scene(modifyInvoiceParent);
+            modifyInvoiceController controller = fxmlLoader.<modifyInvoiceController>getController();
+            controller.setField(invoiceId,this.userInfo);
+            Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            window.setScene(modifyInvoiceScene);
+            window.show();
+        } catch (Exception e){
+            System.out.println(e.toString());
+        }
     }
     public void manageInvoiceAction (ActionEvent actionEvent){
         try{

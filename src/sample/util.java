@@ -537,7 +537,7 @@ public class util {
                     "jdbc:mysql://localhost:3306/tax_receipt_system",SQLUser, SQLPassword);
             //here sonoo is database name, root is username and password
             Statement stmt=con.createStatement();
-            stmt.execute("INSERT INTO invoices (customerId,JSON) VALUES ('','{}')");
+            stmt.execute("INSERT INTO invoices (JSON) VALUES ('{}')");
             ResultSet rs = stmt.executeQuery("SELECT MAX(invoiceId) FROM `invoices`");
             while(rs.next()){
                 invoiceId = rs.getInt(1);
@@ -587,6 +587,59 @@ public class util {
             con.close();
         }catch(Exception e){ System.out.println(e);}
         return product;
+    }
+    public static JSONObject getInvoice(int invoiceId,JSONObject userInfo){
+        JSONObject invoice = new JSONObject();
+
+        try{
+
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con=DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/tax_receipt_system",SQLUser, SQLPassword);
+
+            Statement stmt=con.createStatement();
+            ResultSet rs=stmt.executeQuery("select * from invoices where invoiceId="+invoiceId);
+            JSONObject log = new JSONObject();
+
+            while(rs.next()) {
+
+
+                invoice.put("invoiceId",rs.getInt(1));
+                invoice.put("JSON",rs.getString(2));
+
+
+            }
+            log.put("withData",2);
+            log.put("target",invoice.toString());
+            log.put("action","Invoice information read successfully");
+            log.put("userId",userInfo.getInt("userId"));
+            writeLog(log);
+            //System.out.println(count);
+            con.close();
+        }catch(Exception e){ System.out.println(e);}
+        return invoice;
+    }
+    public static void updateInvoice(JSONObject newInfo, int invoiceId, JSONObject userInfo){
+        JSONObject oldInfo = getInvoice(newInfo.getInt("invoiceId"),userInfo);
+        try{
+
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con=DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/tax_receipt_system",SQLUser, SQLPassword);
+            //here sonoo is database name, root is username and password
+            Statement stmt=con.createStatement();
+            stmt.execute("UPDATE invoices SET JSON='"+newInfo.getString("JSON")
+                    +"' WHERE invoiceId="+invoiceId);
+
+            JSONObject log = new JSONObject();
+            log.put("withData",3);
+            log.put("target",oldInfo.toString());
+            log.put("newValue", newInfo.toString());
+            log.put("action","Invoice edited successfully");
+            log.put("userId",userInfo.getInt("userId"));
+            writeLog(log);
+            con.close();
+        }catch(Exception e){ System.out.println(e);}
     }
 }
 

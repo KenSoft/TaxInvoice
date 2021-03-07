@@ -16,7 +16,7 @@
                 <Font size="32.0" />
             </font>
         </Label>
-        <DatePicker GridPane.rowIndex="2" promptText="Select Date"/>
+        <DatePicker fx:id="datePicker" GridPane.rowIndex="2" promptText="Select Date"/>
         <Label fx:id="invoiceIdLabel" prefHeight="45.0" prefWidth="939.0" GridPane.rowIndex="1" alignment="CENTER">
             <font>
                 <Font size="16.0" />
@@ -68,7 +68,7 @@
                 </TableColumn>
             </columns>
         </TableView>
-        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="45.0" prefWidth="939.0" text="" textAlignment="RIGHT" GridPane.rowIndex="7">
+        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="45.0" prefWidth="939.0" text="" textAlignment="RIGHT" GridPane.rowIndex="7" fx:id="priceLabel">
             <font>
                 <Font size="32.0" />
             </font>
@@ -77,7 +77,7 @@
          <buttons>
              <ComboBox fx:id="productCombo" prefHeight="26.0" prefWidth="413.0" promptText="Select Product" ButtonBar.buttonData="LEFT" />
             <TextField fx:id="quantityText" promptText="Input Quantity" ButtonBar.buttonData="LEFT" />
-            <Button fx:id="addToInvoiceButton" mnemonicParsing="false" text="Add Product to Invoice" ButtonBar.buttonData="LEFT" />
+            <Button fx:id="addToInvoiceButton" onAction="#addProductAction" mnemonicParsing="false" text="Add Product to Invoice" ButtonBar.buttonData="LEFT" />
             <Button fx:id="removeFromInvoiceButton" mnemonicParsing="false" text="Remove Product from Invoice" />
 
          </buttons>

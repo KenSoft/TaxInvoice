@@ -25,26 +25,17 @@
         </Label>
         <TableView fx:id="tableView" prefHeight="750.0" prefWidth="700.0" GridPane.rowIndex="1">
             <columns>
-                <TableColumn prefWidth="147.00000607967377" text="Invoice ID">
+                <TableColumn prefWidth="147" text="Invoice ID">
                     <cellValueFactory>
                         <PropertyValueFactory property="invoiceId" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="371.39996337890625" text="Customer Name">
+                <TableColumn prefWidth="500" text="Customer Name">
                     <cellValueFactory>
                         <PropertyValueFactory property="customerName" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="80.5999755859375" text="Item Count">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="itemCount" />
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn prefWidth="79.5999755859375" text="Total Price">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="totalPrice" />
-                    </cellValueFactory>
-                </TableColumn>
+
             </columns>
         </TableView>
 

@@ -75,10 +75,10 @@
         </Label>
         <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="8">
          <buttons>
-             <ComboBox prefHeight="26.0" prefWidth="413.0" promptText="Select Product" ButtonBar.buttonData="LEFT" />
-            <TextField promptText="Input Quantity" ButtonBar.buttonData="LEFT" />
-            <Button mnemonicParsing="false" text="Add Product to Invoice" ButtonBar.buttonData="LEFT" />
-            <Button mnemonicParsing="false" text="Remove Product from Invoice" />
+             <ComboBox fx:id="productCombo" prefHeight="26.0" prefWidth="413.0" promptText="Select Product" ButtonBar.buttonData="LEFT" />
+            <TextField fx:id="quantityText" promptText="Input Quantity" ButtonBar.buttonData="LEFT" />
+            <Button fx:id="addToInvoiceButton" mnemonicParsing="false" text="Add Product to Invoice" ButtonBar.buttonData="LEFT" />
+            <Button fx:id="removeFromInvoiceButton" mnemonicParsing="false" text="Remove Product from Invoice" />
 
          </buttons>
         </ButtonBar>

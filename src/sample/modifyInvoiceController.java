@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -19,12 +21,16 @@ public class modifyInvoiceController {
     public JSONObject invoice;
     public JSONObject companyInfo;
     public JSONArray customers;
+    public JSONArray products;
     public int invoiceId;
     public Button previousButton;
+    public Button addToInvoiceButton;
+    public Button removeFromInvoiceButton;
     public TableView tableView;
     public Label invoiceIdLabel;
     public Label companyInfoLabel;
     public Label customerInfoLabel;
+    public TextField quantityText;
     public ComboBox<CustomerItem> customerCombo = new ComboBox<CustomerItem>();
     public ComboBox<ProductItem> productCombo = new ComboBox<ProductItem>();
     public void setField (int invoiceId, JSONObject userInfo){
@@ -36,6 +42,59 @@ public class modifyInvoiceController {
                 companyInfo.getString("taxId")+")\n"+companyInfo.getString("address")+"\nPhone: "
                 +companyInfo.getString("officePhone")+" Email: "+companyInfo.getString("email")+"\n"+
                 companyInfo.getString("website"));
+        addToInvoiceButton.setDisable(true);
+        quantityText.textProperty().addListener((observable, oldValue, newValue) -> {
+            addToInvoiceButton.setDisable(quantityText.getText().trim().isEmpty());
+        });
+
+        removeFromInvoiceButton.setDisable(true);
+        tableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                //System.out.println(newSelection.userId);
+                removeFromInvoiceButton.setDisable(false);
+            } else {
+                removeFromInvoiceButton.setDisable(true);
+            }
+        });
+
+        quantityText.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    quantityText.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+
+        products = util.getProducts(this.userInfo);
+        productCombo.setConverter(new StringConverter<ProductItem>() {
+            @Override
+            public String toString(ProductItem object) {
+                return (object.productId+" - "+object.getProductName());
+            }
+
+            @Override
+            public ProductItem fromString(String string) {
+                return null;
+            }
+        });
+        for(int i=0;i<products.length();i++){
+            productCombo.getItems().add(
+                    new ProductItem(
+                            products.getJSONObject(i).getInt("productId"),
+                            products.getJSONObject(i).getString("productName"),
+                            products.getJSONObject(i).getString("unit"),
+                            products.getJSONObject(i).getString("description"),
+                            products.getJSONObject(i).getDouble("price"))
+            );
+        }
+        productCombo.valueProperty().addListener((obs, oldVal, newVal) ->
+        {
+            JSONObject product = util.getProduct(newVal.productId,this.userInfo);
+
+        });
+
         customers = util.getCustomers(this.userInfo);
         customerCombo.setConverter(new StringConverter<CustomerItem>() {
             @Override

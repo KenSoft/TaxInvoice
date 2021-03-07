@@ -95,7 +95,7 @@ public class manageProductController {
             if(newProduct.getInt("cancelled")==0) {
                 Alert information = new Alert(Alert.AlertType.INFORMATION);
                 information.setTitle("Information");
-                information.setHeaderText("User Created!");
+                information.setHeaderText("Product Created!");
                 information.setContentText("Changes has been saved successfully!");
                 information.showAndWait();
             }
@@ -378,11 +378,45 @@ public class manageProductController {
         if(newInfo.getInt("cancelled")==0) {
             Alert information = new Alert(Alert.AlertType.INFORMATION);
             information.setTitle("Information");
-            information.setHeaderText("Customer Created!");
+            information.setHeaderText("Product Updated!");
             information.setContentText("Changes has been saved successfully!");
             information.showAndWait();
         }
     }
 
 }
+    public void deleteProductAction(ActionEvent actionEvent){
+        ProductItem productItem = tableView.getSelectionModel().getSelectedItem();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Delete Product");
+        alert.setContentText("Are you sure to delete product: "+productItem.productName+"?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            util.deleteProduct(productItem.productId,this.userInfo);
+            Alert information = new Alert(Alert.AlertType.INFORMATION);
+            information.setTitle("Information");
+            information.setHeaderText("Product Deleted!");
+            information.setContentText("Changes has been saved successfully!");
+            information.showAndWait();
+            tableView.getItems().clear();
+            products = util.getProducts(this.userInfo);
+            for(int i=0;i<products.length();i++){
+                tableView.getItems().add(new ProductItem(
+
+                        products.getJSONObject(i).getInt("productId"),
+                        products.getJSONObject(i).getString("productName"),
+                        products.getJSONObject(i).getString("unit"),
+                        products.getJSONObject(i).getString("description"),
+                        products.getJSONObject(i).getDouble("price")
+                ));
+
+            }
+
+
+        } else {
+            // ... user chose CANCEL or closed the dialog
+        }
+    }
 }

@@ -166,7 +166,7 @@ public class manageCustomerController {
         if(newInfo.getInt("cancelled")==0) {
             Alert information = new Alert(Alert.AlertType.INFORMATION);
             information.setTitle("Information");
-            information.setHeaderText("Customer Created!");
+            information.setHeaderText("Customer Modified!");
             information.setContentText("Changes has been saved successfully!");
             information.showAndWait();
         }
@@ -544,7 +544,7 @@ public class manageCustomerController {
         });
         return dialog;
     }
-    public void deleteCustomerEvent(ActionEvent actionEvent){
+    public void deleteCustomerAction(ActionEvent actionEvent){
         CustomerItem customerItem = tableView.getSelectionModel().getSelectedItem();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");

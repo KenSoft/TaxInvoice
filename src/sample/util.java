@@ -510,5 +510,24 @@ public class util {
             con.close();
         }catch(Exception e){ System.out.println(e);}
     }
+    public static void deleteProduct(int productId, JSONObject userInfo){
+        try{
+
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con=DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/tax_receipt_system",SQLUser, SQLPassword);
+            //here sonoo is database name, root is username and password
+            Statement stmt=con.createStatement();
+            stmt.execute("DELETE FROM products WHERE productId="+productId);
+
+            JSONObject log = new JSONObject();
+            log.put("withData",1);
+            log.put("target",productId);
+            log.put("action","Product deleted successfully");
+            log.put("userId",userInfo.getInt("userId"));
+            writeLog(log);
+            con.close();
+        }catch(Exception e){ System.out.println(e);}
+    }
 }
 

@@ -57,7 +57,7 @@
         <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="4">
             <buttons>
                 <Button fx:id="previousButton" mnemonicParsing="false" onAction="#previousPress" prefHeight="25.0" prefWidth="400.0" text="Back" ButtonBar.buttonData="LEFT" />
-                <Button fx:id="deleteProductButton" prefWidth="400" mnemonicParsing="false" text="Delete Product" ButtonBar.buttonData="RIGHT"/>
+                <Button fx:id="deleteProductButton" onAction="#deleteProductAction" prefWidth="400" mnemonicParsing="false" text="Delete Product" ButtonBar.buttonData="RIGHT"/>
             </buttons>
         </ButtonBar>
     </children>

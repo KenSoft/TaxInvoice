@@ -37,7 +37,7 @@
                 </TableColumn>
                 <TableColumn prefWidth="80.5999755859375" text="Unit Price">
                     <cellValueFactory>
-                        <PropertyValueFactory property="unitPrice" />
+                        <PropertyValueFactory property="price" />
                     </cellValueFactory>
                 </TableColumn>
                 <TableColumn prefWidth="79.5999755859375" text="Unit">

@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,8 +17,21 @@ public class manageProductController {
     public Button previousButton;
     public JSONObject userInfo;
     public JSONArray products;
+    public TableView tableView;
     public void setField (JSONObject userInfo){
         this.userInfo = userInfo;
+        products = util.getProducts(this.userInfo);
+        for(int i=0;i<products.length();i++){
+            tableView.getItems().add(new ProductItem(
+
+                    products.getJSONObject(i).getInt("productId"),
+                    products.getJSONObject(i).getString("productName"),
+                    products.getJSONObject(i).getString("unit"),
+                    products.getJSONObject(i).getString("description"),
+                    products.getJSONObject(i).getDouble("price")
+            ));
+
+        }
 
     }
     public void previousPress(ActionEvent actionEvent){

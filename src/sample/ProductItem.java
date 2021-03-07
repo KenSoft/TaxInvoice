@@ -3,11 +3,11 @@ package sample;
 public class ProductItem {
     public int productId;
     public double price;
-    public String produtName, unit, description;
+    public String productName, unit, description;
 
-    public ProductItem(int productId, String produtName, String unit, String description, double price){
+    public ProductItem(int productId, String productName, String unit, String description, double price){
         this.productId = productId;
-        this.produtName = produtName;
+        this.productName = productName;
         this.unit = unit;
         this.description = description;
         this.price = price;
@@ -25,8 +25,8 @@ public class ProductItem {
         return description;
     }
 
-    public String getProdutName() {
-        return produtName;
+    public String getProductName() {
+        return productName;
     }
 
     public String getUnit() {

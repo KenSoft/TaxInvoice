@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" prefHeight="500" prefWidth="500" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.superMenuController">
+
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" text="Superuser Menu" textAlignment="CENTER" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Label>
+      <Label fx:id="welcomeLabel" alignment="CENTER" contentDisplay="CENTER" text="" textAlignment="CENTER" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="manageUserButton" mnemonicParsing="false" onAction="#manageUsersAction" prefWidth="300" text="Manage Users" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+      <Button fx:id="changePasswordButton" mnemonicParsing="false" onAction="#changePasswordAction" prefWidth="300" text="Change Password" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+      <Button alignment="CENTER" mnemonicParsing="false" onAction="#logoutAction" prefWidth="300" text="Logout" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+   </children>
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+
+</GridPane>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" prefHeight="600.0" prefWidth="750.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.manageInvoiceController">
+    <columnConstraints>
+        <ColumnConstraints />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+        <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" />
+        <RowConstraints />
+    </rowConstraints>
+    <children>
+        <Label alignment="CENTER" contentDisplay="CENTER" text="Invoice List" textAlignment="CENTER" GridPane.halignment="CENTER">
+            <font>
+                <Font size="32.0" />
+            </font>
+        </Label>
+        <TableView fx:id="tableView" prefHeight="750.0" prefWidth="700.0" GridPane.rowIndex="1">
+            <columns>
+                <TableColumn prefWidth="147.00000607967377" text="Invoice ID">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="invoiceId" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="371.39996337890625" text="Customer Name">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="customerName" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="80.5999755859375" text="Item Count">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="itemCount" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="79.5999755859375" text="Total Price">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="totalPrice" />
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
+
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="3">
+        <buttons>
+          <Button prefWidth="400" mnemonicParsing="false" text="Modify Invoice" ButtonBar.buttonData="LEFT"/>
+          <Button prefWidth="400" mnemonicParsing="false" text="Print Invoice" ButtonBar.buttonData="RIGHT"/>
+        </buttons>
+      </ButtonBar>
+        <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="4">
+            <buttons>
+                <Button fx:id="previousButton" mnemonicParsing="false" onAction="#previousPress" prefHeight="25.0" prefWidth="690.0" text="Back" GridPane.rowIndex="4" ButtonBar.buttonData="LEFT"/>
+                <Button prefWidth="400" mnemonicParsing="false" text="Delete Invoice" ButtonBar.buttonData="RIGHT"/>
+            </buttons>
+        </ButtonBar>
+    </children>
+    <padding>
+        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+    </padding>
+</GridPane>

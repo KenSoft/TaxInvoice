@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" prefHeight="500" prefWidth="500" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.mainMenuController">
+
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" text="Main Menu" textAlignment="CENTER" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Label>
+      <Label fx:id="welcomeLabel" alignment="CENTER" contentDisplay="CENTER" text="" textAlignment="CENTER" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="createInvoiceButton" onAction="#createInvoiceAction" mnemonicParsing="false" prefWidth="300" text="Create New Invoice" GridPane.rowIndex="2" textAlignment="CENTER" GridPane.halignment="CENTER" />
+      <Button fx:id="manageInvoiceButton" onAction="#manageInvoiceAction" mnemonicParsing="false" prefWidth="300" text="Manage Invoices" GridPane.rowIndex="3" textAlignment="CENTER" GridPane.halignment="CENTER" />
+      <Button fx:id="manageProductButton" onAction="#manageProductAction" mnemonicParsing="false" prefWidth="300" text="Manage Products" GridPane.rowIndex="4" textAlignment="CENTER" GridPane.halignment="CENTER" />
+      <Button fx:id="manageCustomerButton" onAction="#manageCustomerAction" mnemonicParsing="false" prefWidth="300" text="Manage Customers" GridPane.rowIndex="5" textAlignment="CENTER" GridPane.halignment="CENTER" />
+      <Button fx:id="logoutButton" alignment="CENTER" prefWidth="300" mnemonicParsing="false" onAction="#logoutAction" text="Logout" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+      <Button fx:id="exitButton" onAction="#exitAction" mnemonicParsing="false" prefWidth="300" text="Exit" GridPane.rowIndex="7" textAlignment="CENTER" GridPane.halignment="CENTER" />
+
+   </children>
+
+
+</GridPane>

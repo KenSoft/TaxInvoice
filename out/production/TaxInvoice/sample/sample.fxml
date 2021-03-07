@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" prefHeight="500" prefWidth="500" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" text="Please Login" textAlignment="CENTER" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Label>
+      <Label text="Username:" GridPane.rowIndex="1" />
+      <Label text="Password:" GridPane.rowIndex="2" />
+      <TextField fx:id="username" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <PasswordField fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
+         <buttons>
+            <Button fx:id="cancelButton" onAction="#cancelAction" mnemonicParsing="false" prefHeight="25.0" prefWidth="371.0" text="Exit" ButtonBar.buttonData="LEFT" />
+            <Button fx:id="loginButton" onAction="#loginAction" mnemonicParsing="false" text="Login" ButtonBar.buttonData="RIGHT" />
+         </buttons>
+      </ButtonBar>
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
+         <buttons>
+            <Button fx:id="adminButton" onAction="#adminMenuAction" mnemonicParsing="false" prefHeight="26.0" prefWidth="300.0" text="System Administrator Menu" ButtonBar.buttonData="LEFT" />
+         </buttons>
+      </ButtonBar>
+   </children>
+
+</GridPane>

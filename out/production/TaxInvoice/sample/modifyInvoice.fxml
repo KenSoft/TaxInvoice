@@ -78,7 +78,7 @@
              <ComboBox fx:id="productCombo" prefHeight="26.0" prefWidth="413.0" promptText="Select Product" ButtonBar.buttonData="LEFT" />
             <TextField fx:id="quantityText" promptText="Input Quantity" ButtonBar.buttonData="LEFT" />
             <Button fx:id="addToInvoiceButton" onAction="#addProductAction" mnemonicParsing="false" text="Add Product to Invoice" ButtonBar.buttonData="LEFT" />
-            <Button fx:id="removeFromInvoiceButton" mnemonicParsing="false" text="Remove Product from Invoice" />
+            <Button fx:id="removeFromInvoiceButton" onAction="#removeProductAction" mnemonicParsing="false" text="Remove Product from Invoice" />
 
          </buttons>
         </ButtonBar>

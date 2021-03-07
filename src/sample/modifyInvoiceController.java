@@ -36,6 +36,7 @@ public class modifyInvoiceController {
     public TextField quantityText;
     public DatePicker datePicker;
     public int selectedProductId = 0;
+    public int selectedInvoiceItem = 0;
     public ComboBox<CustomerItem> customerCombo = new ComboBox<CustomerItem>();
     public ComboBox<ProductItem> productCombo = new ComboBox<ProductItem>();
     public void setField (int invoiceId, JSONObject userInfo){
@@ -43,7 +44,7 @@ public class modifyInvoiceController {
         this.invoiceId = invoiceId;
         this.invoice = util.getInvoice(invoiceId,this.userInfo);
         try{
-            this.productsInInvoice = new JSONArray(new JSONObject(this.invoice.getString("JSON")).getString("productsArray"));
+            this.productsInInvoice = new JSONArray(new JSONObject(this.invoice.getString("JSON")).getJSONArray("productsArray"));
             for(int i=0;i<productsInInvoice.length();i++){
                 tableView.getItems().add(new InvoiceProductItem(
                         productsInInvoice.getJSONObject(i).getInt("number"),
@@ -54,8 +55,8 @@ public class modifyInvoiceController {
                         productsInInvoice.getJSONObject(i).getDouble("price"),
                         productsInInvoice.getJSONObject(i).getDouble("totalPrice")
                 ));
-            priceLabel.setText("Price Before VAT: "+String.format("%.2f", Double.parseDouble(new JSONObject(this.invoice.getString("JSON")).getString("totalPrice"))/1.07)
-                    +" THB | Total Price: "+String.format("%.2f", Double.parseDouble(new JSONObject(this.invoice.getString("JSON")).getString("totalPrice"))/1.00)+" THB");
+                priceLabel.setText("Price Before VAT: "+String.format("%.2f", new JSONObject(this.invoice.getString("JSON")).getDouble("totalPrice")/1.07)
+                        +" THB | Total Price: "+String.format("%.2f", new JSONObject(this.invoice.getString("JSON")).getDouble("totalPrice")/1.00)+" THB");
             }
         }catch (Exception e){
             priceLabel.setText("Price Before VAT: 0.00 THB | Total Price: 0:00 THB ");
@@ -75,7 +76,7 @@ public class modifyInvoiceController {
         removeFromInvoiceButton.setDisable(true);
         tableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                //System.out.println(newSelection.userId);
+                selectedInvoiceItem = newSelection.getNumber();
                 removeFromInvoiceButton.setDisable(false);
             } else {
                 removeFromInvoiceButton.setDisable(true);
@@ -215,6 +216,47 @@ public class modifyInvoiceController {
                         +" THB | Total Price: "+String.format("%.2f", new JSONObject(this.invoice.getString("JSON")).getDouble("totalPrice")/1.00)+" THB");
             }
 
+    }
+
+    public void removeProductAction(ActionEvent actionEvent){
+        double totalPrice = 0;
+        try{
+            JSONObject JSON = new JSONObject(invoice.getString("JSON"));
+            totalPrice=JSON.getDouble("totalPrice");
+        }catch (Exception e){
+
+        }
+        this.productsInInvoice = new JSONArray(new JSONObject(this.invoice.getString("JSON")).getJSONArray("productsArray"));
+        for(int i=0;i<this.productsInInvoice.length();i++){
+            if(this.productsInInvoice.getJSONObject(i).getInt("number")==selectedInvoiceItem){
+                totalPrice = totalPrice-productsInInvoice.getJSONObject(i).getDouble("totalPrice");
+                this.productsInInvoice.remove(i);
+                break;
+            }
+        }
+        for(int i=0;i<this.productsInInvoice.length();i++){
+            this.productsInInvoice.getJSONObject(i).put("number",i+1);
+        }
+        JSONObject newJSON = new JSONObject(invoice.getString("JSON"));
+        newJSON.put("productsArray", productsInInvoice);
+        newJSON.put("totalPrice", totalPrice);
+        this.invoice.put("JSON", newJSON.toString());
+        util.updateInvoice(this.invoice,this.invoiceId,this.userInfo);
+        tableView.getItems().clear();
+        this.productsInInvoice = new JSONArray(new JSONObject(this.invoice.getString("JSON")).getJSONArray("productsArray"));
+        for(int i=0;i<productsInInvoice.length();i++){
+            tableView.getItems().add(new InvoiceProductItem(
+                    productsInInvoice.getJSONObject(i).getInt("number"),
+                    productsInInvoice.getJSONObject(i).getInt("productId"),
+                    productsInInvoice.getJSONObject(i).getString("productName"),
+                    productsInInvoice.getJSONObject(i).getString("unit"),
+                    productsInInvoice.getJSONObject(i).getInt("quantity"),
+                    productsInInvoice.getJSONObject(i).getDouble("price"),
+                    productsInInvoice.getJSONObject(i).getDouble("totalPrice")
+            ));
+            priceLabel.setText("Price Before VAT: "+String.format("%.2f", new JSONObject(this.invoice.getString("JSON")).getDouble("totalPrice")/1.07)
+                    +" THB | Total Price: "+String.format("%.2f", new JSONObject(this.invoice.getString("JSON")).getDouble("totalPrice")/1.00)+" THB");
+        }
     }
 
     public void previousPress(ActionEvent actionEvent){

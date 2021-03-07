@@ -63,11 +63,13 @@ public class mainMenuController {
     }
     public void manageInvoiceAction (ActionEvent actionEvent){
         try{
-            Parent tableViewParent = FXMLLoader.load(getClass().getResource("manageInvoice.fxml"));
-            Scene tableViewScene = new Scene(tableViewParent);
-
-            Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-            window.setScene(tableViewScene);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("manageInvoice.fxml"));
+            Parent manageInvoiceParent = (Parent)fxmlLoader.load();
+            Scene manageInvoiceScene = new Scene(manageInvoiceParent);
+            manageInvoiceController controller = fxmlLoader.<manageInvoiceController>getController();
+            controller.setField(userInfo);
+            Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            window.setScene(manageInvoiceScene);
             window.show();
         } catch (IOException e){
 
@@ -76,8 +78,8 @@ public class mainMenuController {
     public void manageProductAction (ActionEvent actionEvent){
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("manageProduct.fxml"));
-            Parent mangeProductParent = (Parent)fxmlLoader.load();
-            Scene manageProductScene = new Scene(mangeProductParent);
+            Parent manageProductParent = (Parent)fxmlLoader.load();
+            Scene manageProductScene = new Scene(manageProductParent);
             manageProductController controller = fxmlLoader.<manageProductController>getController();
             controller.setField(userInfo);
             Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

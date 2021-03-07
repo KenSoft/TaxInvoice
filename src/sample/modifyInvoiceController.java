@@ -15,6 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.concurrent.ExecutionException;
 
 public class modifyInvoiceController {
@@ -61,6 +62,7 @@ public class modifyInvoiceController {
         }catch (Exception e){
             priceLabel.setText("Price Before VAT: 0.00 THB | Total Price: 0:00 THB ");
         }
+
 
         invoiceIdLabel.setText("Invoice ID: "+this.invoiceId);
         companyInfo=util.getCompanyInfo(this.userInfo);
@@ -164,8 +166,30 @@ public class modifyInvoiceController {
                 this.invoice.put("JSON",newJSON.toString());
                 util.updateInvoice(this.invoice,this.invoiceId,this.userInfo);
             });
+        try{
+            JSONObject JSON = new JSONObject(invoice.getString("JSON"));
+            int customerId = JSON.getInt("customerId");
+            JSONObject customer = util.getCustomer(customerId,this.userInfo);
+            customerInfoLabel.setText(customer.getString("customerName")+" (Tax ID: "+
+                    customer.getString("taxId")+")\n"+customer.getString("address")+"\nPhone: "
+                    +customer.getString("officePhone")+"\nEmail: "+customer.getString("email"));
+            JSONArray customers = util.getCustomers(this.userInfo);
+            for(int i=0;i<customers.length();i++){
+                if(customers.getJSONObject(i).getInt("customerId")==customer.getInt("customerId")){
+                    customerCombo.getSelectionModel().select(i);
+                }
+            }
 
 
+        }catch (Exception e){
+
+        }
+        try{
+            JSONObject JSON = new JSONObject(invoice.getString("JSON"));
+            datePicker.setValue(LocalDate.parse(JSON.getString("saleDate")));
+        }catch (Exception e){
+
+        }
     }
 
     public void addProductAction(ActionEvent actionEvent){

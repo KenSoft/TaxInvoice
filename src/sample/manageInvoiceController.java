@@ -6,20 +6,88 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
 public class manageInvoiceController {
+    public JSONObject userInfo;
+    public JSONArray invoices;
     public Button previousButton;
-    public void previousPress(ActionEvent actionEvent){
-        try{
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("mainMenu.fxml"));
-        Scene tableViewScene = new Scene(tableViewParent);
+    public Button deleteInvoiceButton;
+    public Button printInvoiceButton;
+    public Button modifyInvoiceButton;
+    public TableView<InvoiceItem> tableView;
+    public int invoiceId;
+    public void setField (JSONObject userInfo){
+        this.userInfo = userInfo;
+        invoices = util.getInvoices(this.userInfo);
+        for(int i=0;i<invoices.length();i++){
+            JSONObject JSON = new JSONObject(invoices.getJSONObject(i).getString("JSON"));
+            double totalPrice = 0;
+            String customerName = "";
+            try{
+                totalPrice=JSON.getDouble("totalPrice");
+            } catch (Exception e){
+                totalPrice = 0;
+            }
+            try{
+                JSONObject customer = util.getCustomer(JSON.getInt("customerId"), this.userInfo);
+                customerName=customer.getString("customerName");
+            } catch (Exception e){
+                customerName="";
+            }
+            tableView.getItems().add(new InvoiceItem(
 
-        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        window.setScene(tableViewScene);
-        window.show();
+                    invoices.getJSONObject(i).getInt("invoiceId"),
+                    totalPrice, customerName
+            ));
+
+        }
+        modifyInvoiceButton.setDisable(true);
+        deleteInvoiceButton.setDisable(true);
+        printInvoiceButton.setDisable(true);
+        tableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                invoiceId=newSelection.getInvoiceId();
+                modifyInvoiceButton.setDisable(false);
+                deleteInvoiceButton.setDisable(false);
+                printInvoiceButton.setDisable(false);
+            } else {
+                modifyInvoiceButton.setDisable(true);
+                deleteInvoiceButton.setDisable(true);
+                printInvoiceButton.setDisable(true);
+            }
+        });
+
+    }
+    public void modifyInvoiceAction(ActionEvent actionEvent){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("modifyInvoice.fxml"));
+            Parent modifyInvoiceParent = (Parent) fxmlLoader.load();
+            Scene modifyInvoiceScene = new Scene(modifyInvoiceParent);
+            modifyInvoiceController controller = fxmlLoader.<modifyInvoiceController>getController();
+            controller.setField(invoiceId,this.userInfo);
+            Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            window.setScene(modifyInvoiceScene);
+            window.show();
+        } catch (Exception e){
+            System.out.println(e.toString());
+        }
+    }
+    public void previousPress(ActionEvent actionEvent){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mainMenu.fxml"));
+            Parent mainMenuParent = (Parent)fxmlLoader.load();
+            Scene mainMenuScene = new Scene(mainMenuParent);
+            mainMenuController controller = fxmlLoader.<mainMenuController>getController();
+            controller.setField(userInfo);
+            Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            window.setScene(mainMenuScene);
+            window.show();
         } catch (IOException e){
 
         }

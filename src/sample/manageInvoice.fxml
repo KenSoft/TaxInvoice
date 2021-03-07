@@ -46,14 +46,14 @@
 
       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="3">
         <buttons>
-          <Button prefWidth="400" mnemonicParsing="false" text="Modify Invoice" ButtonBar.buttonData="LEFT"/>
-          <Button prefWidth="400" mnemonicParsing="false" text="Print Invoice" ButtonBar.buttonData="RIGHT"/>
+          <Button prefWidth="400" fx:id="modifyInvoiceButton" onAction="#modifyInvoiceAction" mnemonicParsing="false" text="Modify Invoice" ButtonBar.buttonData="LEFT"/>
+          <Button prefWidth="400" fx:id="printInvoiceButton" mnemonicParsing="false" text="Print Invoice" ButtonBar.buttonData="RIGHT"/>
         </buttons>
       </ButtonBar>
         <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="4">
             <buttons>
                 <Button fx:id="previousButton" mnemonicParsing="false" onAction="#previousPress" prefHeight="25.0" prefWidth="690.0" text="Back" GridPane.rowIndex="4" ButtonBar.buttonData="LEFT"/>
-                <Button prefWidth="400" mnemonicParsing="false" text="Delete Invoice" ButtonBar.buttonData="RIGHT"/>
+                <Button prefWidth="400" fx:id="deleteInvoiceButton"  mnemonicParsing="false" text="Delete Invoice" ButtonBar.buttonData="RIGHT"/>
             </buttons>
         </ButtonBar>
     </children>

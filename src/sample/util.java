@@ -641,5 +641,32 @@ public class util {
             con.close();
         }catch(Exception e){ System.out.println(e);}
     }
+    public static JSONArray getInvoices(JSONObject userInfo){
+        JSONArray invoices = new JSONArray();
+
+        try{
+
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con=DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/tax_receipt_system",SQLUser, SQLPassword);
+            //here sonoo is database name, root is username and password
+            Statement stmt=con.createStatement();
+            ResultSet rs=stmt.executeQuery("select * from invoices");
+            while(rs.next()) {
+                JSONObject invoice = new JSONObject();
+                invoice.put("invoiceId",rs.getInt(1));
+                invoice.put("JSON",rs.getString(2));
+                invoices.put(invoice);
+
+            }
+            JSONObject log = new JSONObject();
+            log.put("withData",1);
+            log.put("action","Invoice list fetched successfully");
+            log.put("userId",userInfo.getInt("userId"));
+            writeLog(log);
+            con.close();
+        }catch(Exception e){ System.out.println(e);}
+        return invoices;
+    }
 }
 

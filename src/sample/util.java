@@ -431,5 +431,25 @@ public class util {
         }catch(Exception e){ System.out.println(e);}
         return products;
     }
+    public static void newProduct(JSONObject newProduct, JSONObject userInfo){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con=DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/tax_receipt_system",SQLUser, SQLPassword);
+            //here sonoo is database name, root is username and password
+            Statement stmt=con.createStatement();
+            stmt.execute("INSERT INTO products (productName, unit, description, price) VALUES ('"+
+                    newProduct.getString("productName")+"','"+newProduct.getString("unit")+"','"
+                    +newProduct.getString("description")+"','"+newProduct.getDouble("price")+"')");
+
+            JSONObject log = new JSONObject();
+            log.put("withData",2);
+            log.put("target", newProduct.toString());
+            log.put("action","Customer added successfully");
+            log.put("userId",userInfo.getInt("userId"));
+            writeLog(log);
+            con.close();
+        }catch(Exception e){ System.out.println(e);}
+    }
 }
 

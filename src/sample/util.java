@@ -668,5 +668,24 @@ public class util {
         }catch(Exception e){ System.out.println(e);}
         return invoices;
     }
+    public static void deleteInvoice(int invoiceId, JSONObject userInfo){
+        try{
+
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con=DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/tax_receipt_system",SQLUser, SQLPassword);
+            //here sonoo is database name, root is username and password
+            Statement stmt=con.createStatement();
+            stmt.execute("DELETE FROM invoices WHERE invoiceId="+invoiceId);
+
+            JSONObject log = new JSONObject();
+            log.put("withData",1);
+            log.put("target",invoiceId);
+            log.put("action","Invoice deleted successfully");
+            log.put("userId",userInfo.getInt("userId"));
+            writeLog(log);
+            con.close();
+        }catch(Exception e){ System.out.println(e);}
+    }
 }
 
